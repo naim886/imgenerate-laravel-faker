@@ -1,0 +1,58 @@
+{
+  "name": "naim886/imgenerate-laravel-faker",
+  "description": "A Laravel package to generate fake images using imgenerate.com API for testing and development",
+  "type": "library",
+  "keywords": [
+    "laravel",
+    "faker",
+    "image",
+    "generator",
+    "imgenerate",
+    "fake-images",
+    "testing",
+    "development",
+    "imgenerate.com",
+    "Naimul Hasan",
+    "Naim"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "MD. Naimul Hasan",
+      "email": "naim886@gmail.com",
+      "website": "https://naimbd.com"
+    }
+  ],
+  "require": {
+    "php": "^8.0|^8.1|^8.2|^8.3",
+    "illuminate/support": "^9.0|^10.0|^11.0",
+    "guzzlehttp/guzzle": "^7.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^7.0|^8.0|^9.0",
+    "phpunit/phpunit": "^9.0|^10.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Imgenerate\\LaravelFaker\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Imgenerate\\LaravelFaker\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Imgenerate\\LaravelFaker\\ImgenerateServiceProvider"
+      ],
+      "aliases": {
+        "Imgenerate": "Imgenerate\\LaravelFaker\\Facades\\Imgenerate"
+      }
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
+
