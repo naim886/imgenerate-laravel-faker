@@ -28,12 +28,12 @@ class FakerProvider extends Base
      *
      * @param int $width
      * @param int $height
-     * @param string|null $category
+     * @param array $options Additional options: bg, text_color, font_size, angle, text, format
      * @return string
      */
-    public function imgenerateUrl(int $width = 640, int $height = 480, ?string $category = null): string
+    public function imgenerateUrl(int $width = 640, int $height = 480, array $options = []): string
     {
-        return $this->service->url($width, $height, $category);
+        return $this->service->url($width, $height, $options);
     }
 
     /**
@@ -41,7 +41,7 @@ class FakerProvider extends Base
      *
      * @param int $width
      * @param int $height
-     * @param string|null $category
+     * @param array $options Additional options: bg, text_color, font_size, angle, text, format
      * @param string|null $path
      * @return string
      * @throws GuzzleException
@@ -49,10 +49,10 @@ class FakerProvider extends Base
     public function imgenerateSave(
         int $width = 640,
         int $height = 480,
-        ?string $category = null,
+        array $options = [],
         ?string $path = null
     ): string {
-        return $this->service->save($width, $height, $category, $path);
+        return $this->service->save($width, $height, $options, $path);
     }
 
     /**
@@ -60,41 +60,45 @@ class FakerProvider extends Base
      *
      * @param array $widthRange
      * @param array $heightRange
-     * @param string|null $category
+     * @param array $options Additional options: bg, text_color, font_size, angle, text, format
      * @return string
      */
     public function imgenerateRandom(
         array $widthRange = [400, 1200],
         array $heightRange = [300, 900],
-        ?string $category = null
+        array $options = []
     ): string {
         $width = $this->generator->numberBetween($widthRange[0], $widthRange[1]);
         $height = $this->generator->numberBetween($heightRange[0], $heightRange[1]);
 
-        return $this->service->url($width, $height, $category);
+        return $this->service->url($width, $height, $options);
     }
 
     /**
      * Generate square image URL.
      *
      * @param int $size
-     * @param string|null $category
+     * @param array $options Additional options: bg, text_color, font_size, angle, text, format
      * @return string
      */
-    public function imgenerateSquare(int $size = 500, ?string $category = null): string
+    public function imgenerateSquare(int $size = 500, array $options = []): string
     {
-        return $this->service->url($size, $size, $category);
+        return $this->service->url($size, $size, $options);
     }
 
     /**
      * Generate avatar image URL.
      *
      * @param int $size
+     * @param array $options Additional options: bg, text_color, font_size, angle, text, format
      * @return string
      */
-    public function imgenerateAvatar(int $size = 200): string
+    public function imgenerateAvatar(int $size = 200, array $options = []): string
     {
-        return $this->service->url($size, $size, 'people');
+        if (empty($options['text'])) {
+            $options['text'] = 'Avatar';
+        }
+        return $this->service->url($size, $size, $options);
     }
 
     /**
@@ -102,14 +106,15 @@ class FakerProvider extends Base
      *
      * @param int $width
      * @param int $height
+     * @param array $options Additional options: bg, text_color, font_size, angle, text, format
      * @return string
      */
-    public function imgenerateProduct(int $width = 800, int $height = 600): string
+    public function imgenerateProduct(int $width = 800, int $height = 600, array $options = []): string
     {
-        $categories = ['food', 'technology', 'business'];
-        $category = $categories[array_rand($categories)];
-
-        return $this->service->url($width, $height, $category);
+        if (empty($options['text'])) {
+            $options['text'] = 'Product';
+        }
+        return $this->service->url($width, $height, $options);
     }
 
     /**
@@ -117,26 +122,27 @@ class FakerProvider extends Base
      *
      * @param int $width
      * @param int $height
+     * @param array $options Additional options: bg, text_color, font_size, angle, text, format
      * @return string
      */
-    public function imgenerateBackground(int $width = 1920, int $height = 1080): string
+    public function imgenerateBackground(int $width = 1920, int $height = 1080, array $options = []): string
     {
-        $categories = ['nature', 'abstract', 'city'];
-        $category = $categories[array_rand($categories)];
-
-        return $this->service->url($width, $height, $category);
+        if (empty($options['text'])) {
+            $options['text'] = 'Background';
+        }
+        return $this->service->url($width, $height, $options);
     }
 
     /**
      * Generate thumbnail image URL.
      *
      * @param int $size
-     * @param string|null $category
+     * @param array $options Additional options: bg, text_color, font_size, angle, text, format
      * @return string
      */
-    public function imgenerateThumbnail(int $size = 150, ?string $category = null): string
+    public function imgenerateThumbnail(int $size = 150, array $options = []): string
     {
-        return $this->service->url($size, $size, $category);
+        return $this->service->url($size, $size, $options);
     }
 }
 

@@ -1,6 +1,7 @@
 {
   "name": "naim886/imgenerate-laravel-faker",
-  "description": "A Laravel package to generate fake images using imgenerate.com API for testing and development",
+  "description": "A Laravel package to generate fake images using imgenerate.com API for testing and development with full customization support",
+  "version": "1.1.0",
   "type": "library",
   "keywords": [
     "laravel",

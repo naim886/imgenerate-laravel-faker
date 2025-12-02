@@ -35,6 +35,36 @@ class ImgenerateService
     protected $disk;
 
     /**
+     * @var string|null
+     */
+    protected $bg;
+
+    /**
+     * @var string|null
+     */
+    protected $textColor;
+
+    /**
+     * @var int|null
+     */
+    protected $fontSize;
+
+    /**
+     * @var int|null
+     */
+    protected $angle;
+
+    /**
+     * @var string|null
+     */
+    protected $text;
+
+    /**
+     * @var string|null
+     */
+    protected $format;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -48,6 +78,12 @@ class ImgenerateService
         $this->height = config('imgenerate.default_height', 480);
         $this->category = config('imgenerate.default_category', null);
         $this->disk = config('imgenerate.default_disk', 'public');
+        $this->bg = config('imgenerate.default_bg', null);
+        $this->textColor = config('imgenerate.default_text_color', null);
+        $this->fontSize = config('imgenerate.default_font_size', null);
+        $this->angle = config('imgenerate.default_angle', 0);
+        $this->text = config('imgenerate.default_text', null);
+        $this->format = config('imgenerate.default_format', null);
     }
 
     /**
@@ -92,30 +128,144 @@ class ImgenerateService
     }
 
     /**
+     * Set background color (hex code without #).
+     *
+     * @param string|null $bg
+     * @return $this
+     */
+    public function bg(?string $bg): self
+    {
+        $this->bg = $bg;
+
+        return $this;
+    }
+
+    /**
+     * Set text color (hex code without #).
+     *
+     * @param string|null $textColor
+     * @return $this
+     */
+    public function textColor(?string $textColor): self
+    {
+        $this->textColor = $textColor;
+
+        return $this;
+    }
+
+    /**
+     * Set font size.
+     *
+     * @param int|null $fontSize
+     * @return $this
+     */
+    public function fontSize(?int $fontSize): self
+    {
+        $this->fontSize = $fontSize;
+
+        return $this;
+    }
+
+    /**
+     * Set text angle.
+     *
+     * @param int|null $angle
+     * @return $this
+     */
+    public function angle(?int $angle): self
+    {
+        $this->angle = $angle;
+
+        return $this;
+    }
+
+    /**
+     * Set custom text.
+     *
+     * @param string|null $text
+     * @return $this
+     */
+    public function text(?string $text): self
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * Set image format.
+     *
+     * @param string|null $format
+     * @return $this
+     */
+    public function format(?string $format): self
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
+    /**
      * Generate image URL.
      *
      * @param int|null $width
      * @param int|null $height
-     * @param string|null $category
+     * @param array $options Additional options: bg, text_color, font_size, angle, text, format
      * @return string
      */
-    public function url(?int $width = null, ?int $height = null, ?string $category = null): string
+    public function url(?int $width = null, ?int $height = null, array $options = []): string
     {
         $width = $width ?? $this->width;
         $height = $height ?? $this->height;
-        $category = $category ?? $this->category;
 
         $params = [
             'width' => $width,
             'height' => $height,
         ];
 
-        if ($category) {
-            $params['text'] = $category;
+        // Add background color
+        if (!empty($options['bg'])) {
+            $params['bg'] = $options['bg'];
+        } elseif ($this->bg) {
+            $params['bg'] = $this->bg;
         }
 
-        // Add random parameter to avoid caching
-        $params['random'] = Str::random(10);
+        // Add text color
+        if (!empty($options['text_color'])) {
+            $params['text_color'] = $options['text_color'];
+        } elseif ($this->textColor) {
+            $params['text_color'] = $this->textColor;
+        }
+
+        // Add font size
+        if (!empty($options['font_size'])) {
+            $params['font_size'] = $options['font_size'];
+        } elseif ($this->fontSize) {
+            $params['font_size'] = $this->fontSize;
+        }
+
+        // Add angle
+        if (isset($options['angle'])) {
+            $params['angle'] = $options['angle'];
+        } elseif ($this->angle !== null) {
+            $params['angle'] = $this->angle;
+        }
+
+        // Add text
+        if (!empty($options['text'])) {
+            $params['text'] = $options['text'];
+        } elseif ($this->text) {
+            $params['text'] = $this->text;
+        } elseif ($this->category) {
+            $params['text'] = $this->category;
+        }
+
+        // Add format
+        if (!empty($options['format'])) {
+            $params['format'] = $options['format'];
+        } elseif ($this->format) {
+            $params['format'] = $this->format;
+        }
 
         $queryString = http_build_query($params);
 
@@ -137,13 +287,13 @@ class ImgenerateService
      *
      * @param int|null $width
      * @param int|null $height
-     * @param string|null $category
+     * @param array $options Additional options: bg, text_color, font_size, angle, text, format
      * @return string
      * @throws GuzzleException
      */
-    public function download(?int $width = null, ?int $height = null, ?string $category = null): string
+    public function download(?int $width = null, ?int $height = null, array $options = []): string
     {
-        $url = $this->url($width, $height, $category);
+        $url = $this->url($width, $height, $options);
 
         $response = $this->client->get($url);
 
@@ -155,7 +305,7 @@ class ImgenerateService
      *
      * @param int|null $width
      * @param int|null $height
-     * @param string|null $category
+     * @param array $options Additional options: bg, text_color, font_size, angle, text, format
      * @param string|null $path
      * @param string|null $filename
      * @return string
@@ -164,7 +314,7 @@ class ImgenerateService
     public function save(
         ?int $width = null,
         ?int $height = null,
-        ?string $category = null,
+        array $options = [],
         ?string $path = null,
         ?string $filename = null
     ): string {
@@ -180,7 +330,7 @@ class ImgenerateService
 
         $fullPath = $path ? "{$path}/{$filename}" : $filename;
 
-        $imageContent = $this->download($width, $height, $category);
+        $imageContent = $this->download($width, $height, $options);
 
         Storage::disk($this->disk)->put($fullPath, $imageContent);
 
@@ -193,15 +343,15 @@ class ImgenerateService
      * @param int $count
      * @param int|null $width
      * @param int|null $height
-     * @param string|null $category
+     * @param array $options Additional options: bg, text_color, font_size, angle, text, format
      * @return array
      */
-    public function multiple(int $count, ?int $width = null, ?int $height = null, ?string $category = null): array
+    public function multiple(int $count, ?int $width = null, ?int $height = null, array $options = []): array
     {
         $images = [];
 
         for ($i = 0; $i < $count; $i++) {
-            $images[] = $this->url($width, $height, $category);
+            $images[] = $this->url($width, $height, $options);
         }
 
         return $images;

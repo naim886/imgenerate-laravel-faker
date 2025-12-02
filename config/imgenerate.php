@@ -82,5 +82,73 @@ return [
 
     'timeout' => env('IMGENERATE_TIMEOUT', 30),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Default Background Color
+    |--------------------------------------------------------------------------
+    |
+    | The default background color (hex code without #).
+    | Example: '1e3a8a' for blue
+    |
+    */
+
+    'default_bg' => env('IMGENERATE_DEFAULT_BG', null),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Text Color
+    |--------------------------------------------------------------------------
+    |
+    | The default text color (hex code without #).
+    | Example: 'ffffff' for white
+    |
+    */
+
+    'default_text_color' => env('IMGENERATE_DEFAULT_TEXT_COLOR', null),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Font Size
+    |--------------------------------------------------------------------------
+    |
+    | The default font size for text on the image.
+    |
+    */
+
+    'default_font_size' => env('IMGENERATE_DEFAULT_FONT_SIZE', null),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Text Angle
+    |--------------------------------------------------------------------------
+    |
+    | The default angle for text rotation (0-360 degrees).
+    |
+    */
+
+    'default_angle' => env('IMGENERATE_DEFAULT_ANGLE', 0),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Text
+    |--------------------------------------------------------------------------
+    |
+    | The default text to display on the image.
+    |
+    */
+
+    'default_text' => env('IMGENERATE_DEFAULT_TEXT', null),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Image Format
+    |--------------------------------------------------------------------------
+    |
+    | The default image format (jpg, png, webp, etc.).
+    |
+    */
+
+    'default_format' => env('IMGENERATE_DEFAULT_FORMAT', null),
+
 ];
 
