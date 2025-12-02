@@ -105,16 +105,21 @@ class ImgenerateService
         $height = $height ?? $this->height;
         $category = $category ?? $this->category;
 
-        $url = "https://www.imgenerate.com/api/image/{$width}x{$height}";
+        $params = [
+            'width' => $width,
+            'height' => $height,
+        ];
 
         if ($category) {
-            $url .= "/{$category}";
+            $params['text'] = $category;
         }
 
-        // Add random query parameter to avoid caching
-        $url .= "?random=" . Str::random(10);
+        // Add random parameter to avoid caching
+        $params['random'] = Str::random(10);
 
-        return $url;
+        $queryString = http_build_query($params);
+
+        return "https://imgenerate.com/generate?{$queryString}";
     }
 
     /**

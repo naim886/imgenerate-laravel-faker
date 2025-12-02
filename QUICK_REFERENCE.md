@@ -193,12 +193,12 @@ composer test
 
 Generated URLs format:
 ```
-https://www.imgenerate.com/api/image/{width}x{height}/{category}?random={string}
+https://imgenerate.com/generate?width={width}&height={height}&text={category}&random={string}
 ```
 
 Example:
 ```
-https://www.imgenerate.com/api/image/800x600/nature?random=abc123xyz
+https://imgenerate.com/generate?width=800&height=600&text=nature&random=abc123xyz
 ```
 
 ## Common Use Cases

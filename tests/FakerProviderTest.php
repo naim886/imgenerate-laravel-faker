@@ -23,7 +23,8 @@ class FakerProviderTest extends TestCase
 
         $this->assertIsString($url);
         $this->assertStringContainsString('imgenerate.com', $url);
-        $this->assertStringContainsString('800x600', $url);
+        $this->assertStringContainsString('width=800', $url);
+        $this->assertStringContainsString('height=600', $url);
     }
 
     /** @test */
@@ -32,7 +33,8 @@ class FakerProviderTest extends TestCase
         $url = $this->faker->imgenerateSquare(500);
 
         $this->assertIsString($url);
-        $this->assertStringContainsString('500x500', $url);
+        $this->assertStringContainsString('width=500', $url);
+        $this->assertStringContainsString('height=500', $url);
     }
 
     /** @test */
@@ -41,8 +43,9 @@ class FakerProviderTest extends TestCase
         $url = $this->faker->imgenerateAvatar(200);
 
         $this->assertIsString($url);
-        $this->assertStringContainsString('200x200', $url);
-        $this->assertStringContainsString('people', $url);
+        $this->assertStringContainsString('width=200', $url);
+        $this->assertStringContainsString('height=200', $url);
+        $this->assertStringContainsString('text=people', $url);
     }
 
     /** @test */
@@ -51,7 +54,8 @@ class FakerProviderTest extends TestCase
         $url = $this->faker->imgenerateProduct(800, 600);
 
         $this->assertIsString($url);
-        $this->assertStringContainsString('800x600', $url);
+        $this->assertStringContainsString('width=800', $url);
+        $this->assertStringContainsString('height=600', $url);
     }
 
     /** @test */
@@ -60,7 +64,8 @@ class FakerProviderTest extends TestCase
         $url = $this->faker->imgenerateBackground(1920, 1080);
 
         $this->assertIsString($url);
-        $this->assertStringContainsString('1920x1080', $url);
+        $this->assertStringContainsString('width=1920', $url);
+        $this->assertStringContainsString('height=1080', $url);
     }
 
     /** @test */
@@ -69,7 +74,8 @@ class FakerProviderTest extends TestCase
         $url = $this->faker->imgenerateThumbnail(150);
 
         $this->assertIsString($url);
-        $this->assertStringContainsString('150x150', $url);
+        $this->assertStringContainsString('width=150', $url);
+        $this->assertStringContainsString('height=150', $url);
     }
 
     /** @test */
@@ -81,4 +87,3 @@ class FakerProviderTest extends TestCase
         $this->assertStringContainsString('imgenerate.com', $url);
     }
 }
-

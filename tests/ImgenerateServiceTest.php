@@ -21,7 +21,8 @@ class ImgenerateServiceTest extends TestCase
         $url = Imgenerate::url(800, 600);
 
         $this->assertIsString($url);
-        $this->assertStringContainsString('800x600', $url);
+        $this->assertStringContainsString('width=800', $url);
+        $this->assertStringContainsString('height=600', $url);
     }
 
     /** @test */
@@ -30,7 +31,7 @@ class ImgenerateServiceTest extends TestCase
         $url = Imgenerate::url(800, 600, 'nature');
 
         $this->assertIsString($url);
-        $this->assertStringContainsString('nature', $url);
+        $this->assertStringContainsString('text=nature', $url);
     }
 
     /** @test */
@@ -41,8 +42,9 @@ class ImgenerateServiceTest extends TestCase
             ->get();
 
         $this->assertIsString($url);
-        $this->assertStringContainsString('1920x1080', $url);
-        $this->assertStringContainsString('technology', $url);
+        $this->assertStringContainsString('width=1920', $url);
+        $this->assertStringContainsString('height=1080', $url);
+        $this->assertStringContainsString('text=technology', $url);
     }
 
     /** @test */
