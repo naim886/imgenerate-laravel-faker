@@ -2,6 +2,19 @@
 
 All notable changes to `naim886/imgenerate-laravel-faker` will be documented in this file.
 
+## 1.2.0 - 2025-12-03
+
+### Changed
+- Extended Laravel support to include Laravel 8.x for broader compatibility
+- Extended PHP support to include PHP 7.4+
+- Updated testbench to support Orchestra Testbench 6.x+
+- Updated PHPUnit to support version 11.x
+- Improved package compatibility with older Laravel projects
+
+### Fixed
+- Fixed dependency conflict issues when installing in Laravel 8 projects
+- Resolved illuminate/support version conflicts
+
 ## 1.1.0 - 2025-12-02
 
 ### Added
